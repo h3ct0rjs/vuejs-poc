@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible"
+        content="ie=edge">
+  <title>MyFirstVueProject :)</title>
+</head>
+
+<body>
+  <div id="app">
+    <button v-on:click="cambiaVisibilidad">Mostrar/Ocultar</button>
+    <tv-show-list></tv-show-list>
+
+  </div>
+
+  <script src="
+                  https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js
+                  "></script>
+
+  <script>
+    Vue.component('tv-show-list', {
+      data: function() {
+        return {
+          tvshows: [{
+              name: 'Game Of Thrones',
+              seassons: 8
+            },
+            {
+              name: 'Breaking Bad',
+              seassons: 5
+            },
+            {
+              name: 'Lost',
+              seassons: 6
+            },
+            {
+              name: 'Batallas Navales',
+              seassons: 4
+            },
+            {
+              name: 'Preacher',
+              seassons: 4
+            },
+            {
+              name: 'HarryPotter',
+              seassons: 7
+            }
+          ]
+
+        }
+      },
+      template: `
+      <ul>
+        <tv-show v-for="(show, index) in tvshows"
+               :key="index"
+               :name="show.name"
+               v-bind:seassons="show.seassons">
+        </tv-show>
+        </ul>  
+      `
+
+    });
+
+    //asi se crean componentes
+    Vue.component('tv-show', {
+      props: {
+        name: String,
+        seassons: Number
+      },
+      template: `
+        <li>
+            <strong>{{name}}</strong>  (Temporadas: {{seassons}})
+        </li>
+      `
+
+    })
+    const app = new Vue({
+      el: '#app',
+      data: {
+        mostrar: false,
+
+      },
+      methods: {
+        cambiaVisibilidad: function() {
+          this.mostrar = !this.mostrar;
+        }
+      }
+
+    })
+  </script>
+</body>
+
+</html>
