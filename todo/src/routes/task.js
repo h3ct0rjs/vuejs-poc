@@ -9,11 +9,18 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	const task = new Task(req.body);
-	await task.save();
-
-	res.json({
-		status: 'Done',
-	});
+	try {
+		let newtask = await task.save();
+		res.json({
+			status: 'Done',
+		});
+	} catch (err) {
+		if (err)
+			res.json({
+				status: 'Failed to save task',
+				error: err,
+			});
+	}
 });
 
 router.put('/:id', async (req, res) => {
