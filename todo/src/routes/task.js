@@ -3,8 +3,14 @@ const router = express.Router();
 const Task = require('./../models/Task');
 
 router.get('/', async (req, res) => {
-	const x = await Task.find();
-	res.json(x);
+	try {
+		const x = await Task.find();
+		res.json(x);
+	} catch (err) {
+		res.json({
+			status: 'Failed',
+		});
+	}
 });
 
 router.post('/', async (req, res) => {
@@ -24,17 +30,25 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-	await Task.findByIdAndUpdate(req.params.id, req.body);
-	res.json({
-		status: 'OK',
-	});
+	try {
+		await Task.findByIdAndUpdate(req.params.id, req.body);
+		res.json({
+			status: 'OK',
+		});
+	} catch (err) {
+		res.send(err);
+	}
 });
 
 router.delete('/:id', async (req, res) => {
-	await Task.findByIdAndRemove(req.params.id);
-	res.json({
-		status: 'OK',
-	});
+	try {
+		await Task.findByIdAndRemove(req.params.id);
+		res.json({
+			status: 'OK',
+		});
+	} catch (err) {
+		return res.status(500).send('Error Deleting');
+	}
 });
 
 module.exports = router;
