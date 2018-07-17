@@ -13,6 +13,17 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/:id', async (req, res) => {
+	try {
+		let taskdetails = await Task.findById(req.params.id);
+		res.json(taskdetails);
+	} catch (err) {
+		console.log(err);
+		res.json({
+			status: 'Failed',
+		});
+	}
+});
 router.post('/', async (req, res) => {
 	let task = new Task(req.body);
 	try {
