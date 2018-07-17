@@ -4,7 +4,7 @@ const Task = require('./../models/Task');
 
 router.get('/', async (req, res) => {
 	try {
-		const x = await Task.find();
+		let x = await Task.find();
 		res.json(x);
 	} catch (err) {
 		res.json({
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	const task = new Task(req.body);
+	let task = new Task(req.body);
 	try {
 		let newtask = await task.save();
 		res.json({
